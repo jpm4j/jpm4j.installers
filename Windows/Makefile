@@ -19,13 +19,6 @@ setup.exe : inno.iss runner.exe sjpm.exe readme.txt jpm.jar
 	iscc  inno.iss         
 
 #
-# Fetch the jar file from the CI server
-#
-
-jpm.jar : 
-	curl -o jpm.jar https://bndtools.ci.cloudbees.com/job/bnd.next/lastSuccessfulBuild/artifact/dist/bundles/biz.aQute.jpm.run/biz.aQute.jpm.run-latest.jar 
-
-#
 # Create a signed version from the runner so we can use it in 
 # jpm to elevate. This does not work yet since the mt.exe 
 # seems to correctly add a manifest but at the same time

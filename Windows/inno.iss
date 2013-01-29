@@ -11,14 +11,14 @@ DefaultGroupName=jpm4j
 OutputDir=.
 
 [Files]
-Source: "jpm.jar"; DestDir: "{app}\misc";  Flags: ignoreversion
+Source: "..\dist\biz.aQute.jpm.run.jar"; DestDir: "{app}\misc";  Flags: ignoreversion
 Source: "runner.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
 Source: "sjpm.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
 Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
 
 [Run]
 ; Filename: "{code:Home}\bin\java.EXE"; Parameters: "-Djavahome=""{code:Home}"" -Dcurrentversion=""{code:Version}"" -jar ""{app}\misc\biz.aQute.jpm.run.jar"" init "
-Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\jpm.jar"" init -k"; Flags: shellexec; Check: IsWin64 
+Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" init -k"; Flags: shellexec; Check: IsWin64 
 
 [Registry]
 Root: HKCU; Subkey: "Software\JPM4j"; Flags: uninsdeletekeyifempty
