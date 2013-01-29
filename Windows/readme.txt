@@ -8,4 +8,9 @@ https://www.jpm4j.org/#/md/jpmcmd
 
 Security
 This command must run in an elevated shell to install/uninstall 
-applications (as it should be). 
+applications (as it should be). It is strongly advised to only
+run the jpm commands in this elevated console that modify the
+setup. Applications and other commands should run in a normal shell.
+
+
+

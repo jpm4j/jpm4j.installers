@@ -1,32 +1,15 @@
 #
-# This makefile creates the (signed) Windows installer for jpm4j. Before running this
-# makefile ensure that the following tools are in the command path:
-#
-#  signtool  	"/c/Program Files/Microsoft SDKs/Windows/v7.1/Bin"
-#  keytool   	"/c/Program Files/Java/jdk1.7.0_07/bin"
-#  iccs      	"/c/Program Files (x86)\Inno Setup 5"
-#  mingw32-gcc	"/c/MinGW/bin"
-# 
-# This makefile is assumed to run on a windows PC and assumes a cygwin kind of
-# environment.
-#
-# This makefile signs the artifacts. To not hardcode the password, a macro $(PASSWORD)
-# is used. This macro should be set as an environment variable before the makefile is
-# run.
-#
-# The jar is by default retrieved from the ci server. 
 #
 
-all: jpm-setup.exe
- 	
+all: ../dist/jpm-setup.exe
  
 # 
 # Sign the installer
 #
 
-jpm-setup.exe : setup.exe aqute.pfx
-	cp setup.exe jpm-setup.exe
-	signtool sign -f aqute.pfx -d "Installer for jpm4j" -du "https://www.jpm4j.org/#/md/jpmcmd" -a -p $(PASSWORD) jpm-setup.exe 
+../dist/jpm-setup.exe : setup.exe aqute.pfx
+	cp setup.exe $@
+	signtool sign -f aqute.pfx -d "Installer for jpm4j" -du "https://www.jpm4j.org/#/md/jpmcmd" -a -p $(PASSWORD) $@ 
 
 #
 # Build the installer
