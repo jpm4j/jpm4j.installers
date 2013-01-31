@@ -1,5 +1,46 @@
+# Scripts (bat) files do not work very well in Windows, their process rules are different 
+# than exes.  So we do it in another way. There is a small exe file that finds out its
+# own name from arg[0] (standard guaranteed C). This name is then looked up in 
+# 
+# 	{dir}/commands/{name}.jpm
+# 
+# It then takes this file and uses it directly as input to the system command. It is the task
+# of jpm to make sure the content is therefore correct. When a new command is installed, jpm
+# copies the exe to the appropriate bin directory and creates a "script" in the commands
+# directory.
+# 
+# The setup.exe is signed. However, windows needs a PKCS#12 file so we have to
+# format this from the default keystore. The keystore is in ../shared. The password
+# is for obvious reasons not given. The PASSWORD environment variable should be set for the
+# Makefile is ran.
+# 
+# The environment is trying to limit itself to MinGW, especially its msys option. This
+# includes a limited (but highly portable) shell environment. It can be download from
+# 
+# 	http://www.mingw.org/
+# 
+# The installer is using inno, an amazing relieve after trying many others. Very powerful
+# and easy to script. Kudos. Installed from:
+# 
+# 	http://www.jrsoftware.org/isinfo.php
+# 
+# To sign the files (and maybe one day add a manifest), the Windows SDK for Windows 7
+# is required:
+# 
+# 	http://www.microsoft.com/en-us/download/details.aspx?id=3138
+# 
+# This makefile creates the (signed) Windows installer for jpm4j. Before running this
+# makefile ensure that the following tools are in the command path:
+# 
+#  msys.bat    "/c/MinGW/msys/1.0"
+#  signtool  	"/c/Program Files/Microsoft SDKs/Windows/v7.1/Bin"
+#  keytool   	"/c/Program Files/Java/jdk1.7.0_07/bin"
+#  iccs      	"/c/Program Files (x86)\Inno Setup 5"
+#  mingw32-gcc	"/c/MinGW/bin"
+# 
+# The jar is by default retrieved from the ci server. 
 #
-#
+# 64/32 bit misery ...
 
 all: ../dist/jpm-setup.exe
  
