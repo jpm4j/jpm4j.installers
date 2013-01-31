@@ -34,7 +34,7 @@ Root: HKLM64; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environm
 ChangesEnvironment=yes
 
 [Tasks]
-Name: force32; Description:"Force 32 bit installation";  Flags: unchecked;
+Name: force32; Description:"Force 32 bit installation";  Flags: unchecked; Check: IsWin64;
 
 [Code]
 var 
@@ -47,13 +47,13 @@ begin
   Result := True;
   if CurPageID = wpSelectTasks then
   begin
-    if WizardForm.TasksList.Checked[1] then
+    if WizardForm.TasksList.Checked[0] then
     begin
-      MsgBox('First task has been checked.', mbInformation, MB_OK);
+      Force32 := true;
     end
     else
     begin
-      MsgBox('First task has NOT been checked.', mbInformation, MB_OK);
+      Force32 := false;
     end
   end;
 end;
@@ -91,9 +91,9 @@ begin
     end else
     begin
 	  	MsgBox('Installing in 32 bit mode', mbInformation, MB_OK);
-	    RegQueryStringValue(HKLM, 'SOFTWARE\JavaSoft\Java Runtime Environment', 'CurrentVersion', JavaVer);
+	    RegQueryStringValue(HKLM32, 'SOFTWARE\JavaSoft\Java Runtime Environment', 'CurrentVersion', JavaVer);
 	    RegPath := Format( 'SOFTWARE\JavaSoft\Java Runtime Environment\%s', [ JavaVer ] );
-	    RegQueryStringValue(HKLM, RegPath, 'JavaHome', JavaHome);
+	    RegQueryStringValue(HKLM32, RegPath, 'JavaHome', JavaHome);
 	    Result := Format( '%s\bin\java.exe', [ JavaHome ] );
     end
 end;

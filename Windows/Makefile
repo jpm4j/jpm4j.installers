@@ -98,3 +98,6 @@ runner.exe : runner.c
 clean :
 	-rm runner.exe setup.exe aqute.pfx sjpm.exe jpm.jar jpm-setup.exe
 	
+
+getjpm:
+	curl https://bndtools.ci.cloudbees.com/job/bnd.next/lastSuccessfulBuild/artifact/dist/bundles/biz.aQute.jpm.run/biz.aQute.jpm.run-latest.jar >jpm.jar
