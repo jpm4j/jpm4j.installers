@@ -9,7 +9,6 @@ AppVersion=1.1
 DefaultDirName={pf}\jpm4j
 DefaultGroupName=jpm4j
 OutputDir=.
-ArchitecturesInstallIn64BitMode=x64
 
 [Files]
 Source: "..\dist\biz.aQute.jpm.run.jar"; DestDir: "{app}\misc";  Flags: ignoreversion
@@ -18,14 +17,14 @@ Source: "sjpm.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
 Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
 
 [Run]
-Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" init -k"; Flags: shellexec 
+Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -et init -k"; Flags: shellexec 
 
 [Registry]
 Root: HKCU; Subkey: "Software\JPM4j"; Flags: uninsdeletekeyifempty
 Root: HKLM32; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"
 Root: HKLM64; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"; 
-Root: HKLM; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Commands"; ValueData: "{app}\commands\"
-Root: HKLM; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Commands"; ValueData: "{app}\commands\"
+Root: HKLM32; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Commands"; ValueData: "{app}\commands\"
+Root: HKLM64; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Commands"; ValueData: "{app}\commands\"
 Root: HKLM32; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin'))
 Root: HKLM64; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin'))
 
@@ -81,6 +80,7 @@ var
   RegPath : String;
   JavaHome : String;
 begin
+	MsgBox(ExpandConstant('{app}'), mbInformation, MB_OK);
 	if not(Force32) and IsWin64 then 
 	begin
 	  	MsgBox('Installing in 64 bit mode', mbInformation, MB_OK);

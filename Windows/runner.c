@@ -78,6 +78,7 @@ int main(int argc, char * argv[])
 
 	FILE *file = fopen ( path, "rb" );
 	if ( file == NULL) {
+        printf("Path: %s\n", path);
         perror("Cannot find jpm command file");
         exit(-1);
 	}
