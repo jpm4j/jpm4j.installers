@@ -17,14 +17,12 @@ Source: "sjpm.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
 Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
 
 [Run]
-Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -et init -k"; Flags: shellexec 
-
+Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -ek init"; Flags: shellexec 
+                                                                                                 
 [Registry]
 Root: HKCU; Subkey: "Software\JPM4j"; Flags: uninsdeletekeyifempty
 Root: HKLM32; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"
 Root: HKLM64; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"; 
-Root: HKLM32; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Commands"; ValueData: "{app}\commands\"
-Root: HKLM64; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Commands"; ValueData: "{app}\commands\"
 Root: HKLM32; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin'))
 Root: HKLM64; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin'))
 
@@ -80,17 +78,16 @@ var
   RegPath : String;
   JavaHome : String;
 begin
-	MsgBox(ExpandConstant('{app}'), mbInformation, MB_OK);
 	if not(Force32) and IsWin64 then 
 	begin
-	  	MsgBox('Installing in 64 bit mode', mbInformation, MB_OK);
+	  	//MsgBox('Installing in 64 bit mode', mbInformation, MB_OK);
 	    RegQueryStringValue(HKLM64, 'SOFTWARE\JavaSoft\Java Runtime Environment', 'CurrentVersion', JavaVer);
 	    RegPath := Format( 'SOFTWARE\JavaSoft\Java Runtime Environment\%s', [ JavaVer ] );
 	    RegQueryStringValue(HKLM64, RegPath, 'JavaHome', JavaHome);
 	    Result := Format( '%s\bin\java.exe', [ JavaHome ] );
     end else
     begin
-	  	MsgBox('Installing in 32 bit mode', mbInformation, MB_OK);
+	  	//MsgBox('Installing in 32 bit mode', mbInformation, MB_OK);
 	    RegQueryStringValue(HKLM32, 'SOFTWARE\JavaSoft\Java Runtime Environment', 'CurrentVersion', JavaVer);
 	    RegPath := Format( 'SOFTWARE\JavaSoft\Java Runtime Environment\%s', [ JavaVer ] );
 	    RegQueryStringValue(HKLM32, RegPath, 'JavaHome', JavaHome);
