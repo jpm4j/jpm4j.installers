@@ -22,38 +22,15 @@ Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"
 [Registry]
 Root: HKCU; Subkey: "Software\JPM4j"; Flags: uninsdeletekeyifempty
 Root: HKLM32; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"
-Root: HKLM64; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"; 
+Root: HKLM64; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"; Check: IsWin64
 Root: HKLM32; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin'))
-Root: HKLM64; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin'))
+Root: HKLM64; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin')) and IsWin64
 
 [Setup]
 ; Tell Windows Explorer to reload the environment
 ChangesEnvironment=yes
 
-[Tasks]
-Name: force32; Description:"Force 32 bit installation";  Flags: unchecked; Check: IsWin64;
-
 [Code]
-var 
-	Force32: Boolean;
-	
-	
-// 
-function NextButtonClick(CurPageID: Integer): Boolean;
-begin
-  Result := True;
-  if CurPageID = wpSelectTasks then
-  begin
-    if WizardForm.TasksList.Checked[0] then
-    begin
-      Force32 := true;
-    end
-    else
-    begin
-      Force32 := false;
-    end
-  end;
-end;
 
 function NeedsAddPath(Param: string): boolean;
 var
@@ -78,7 +55,7 @@ var
   RegPath : String;
   JavaHome : String;
 begin
-	if not(Force32) and IsWin64 then 
+	if IsWin64 then 
 	begin
 	  	//MsgBox('Installing in 64 bit mode', mbInformation, MB_OK);
 	    RegQueryStringValue(HKLM64, 'SOFTWARE\JavaSoft\Java Runtime Environment', 'CurrentVersion', JavaVer);
