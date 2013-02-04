@@ -56,7 +56,7 @@ all: ../dist/jpm-setup.exe
 # Build the installer
 #
 
-setup.exe : inno.iss runner.exe sjpm.exe readme.txt ../dist/biz.aQute.jpm.run.jar
+setup.exe : inno.iss runner.exe sjpm.exe readme.html ../dist/biz.aQute.jpm.run.jar
 	iscc  inno.iss         
 
 #

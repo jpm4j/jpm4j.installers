@@ -14,7 +14,7 @@ OutputDir=.
 Source: "..\dist\biz.aQute.jpm.run.jar"; DestDir: "{app}\misc";  Flags: ignoreversion
 Source: "runner.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
 Source: "sjpm.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
-Source: "readme.txt"; DestDir: "{app}"; Flags: isreadme
+Source: "readme.html"; DestDir: "{app}"; Flags: isreadme
 
 [Run]
 Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -ek init"; Flags: shellexec 
