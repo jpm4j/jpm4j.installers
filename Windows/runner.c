@@ -69,9 +69,5 @@ int main(int argc, char * argv[]) {
     }
     
     int exit = system(total);
-    if ( sjpm) {
-        printf("Hit the any key to continue\n");
-        getch();
-    }
     return exit;
 }
