@@ -8,6 +8,7 @@ void printError( TCHAR* msg );
 
 int main(int argc, char * argv[]) {
     char path[1000];
+    BOOL sjpm = FALSE;
     int i ;
 
     char * cmdline = GetCommandLine();
@@ -30,6 +31,17 @@ int main(int argc, char * argv[]) {
     
     
     GetModuleFileName(NULL, path, sizeof(path));
+    
+    // If this is sjpm, then we chane the name to
+    // jpm. sjpm is elevated, so now we run the
+    // actual command as root.
+    
+    char * suffix = path + strlen(path) - strlen("\\sjpm.exe");
+    if ( stricmp(suffix, "\\sjpm.exe") == 0) {
+        strcpy(suffix, "\\jpm.exe");
+        sjpm = TRUE;
+    }
+    
     strncat(path, ".jpm", sizeof(path));
 
     FILE *file = fopen ( path, "rb" );
@@ -56,5 +68,10 @@ int main(int argc, char * argv[]) {
         p++;
     }
     
-    return system(total);
+    int exit = system(total);
+    if ( sjpm) {
+        printf("Hit the any key to continue\n");
+        getch();
+    }
+    return exit;
 }

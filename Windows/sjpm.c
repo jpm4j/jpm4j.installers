@@ -37,63 +37,20 @@ int main(int argc, char * argv[]) {
     strcpy(s, "jpm.exe");
     printf( "Cmd %s - %s\n", path, cmdline);
     
-    SECURITY_ATTRIBUTES securityAttrs;
-    securityAttrs.nLength = sizeof(securityAttrs);
-    securityAttrs.lpSecurityDescriptor = NULL;
-    securityAttrs.bInheritHandle = TRUE;
-    
-//    BOOL WINAPI CreateProcess(
-//                              _In_opt_     LPCTSTR lpApplicationName,
-//                              _Inout_opt_  LPTSTR lpCommandLine,
-//                              _In_opt_     LPSECURITY_ATTRIBUTES lpProcessAttributes,
-//                              _In_opt_     LPSECURITY_ATTRIBUTES lpThreadAttributes,
-//                              _In_         BOOL bInheritHandles,
-//                              _In_         DWORD dwCreationFlags,
-//                              _In_opt_     LPVOID lpEnvironment,
-//                              _In_opt_     LPCTSTR lpCurrentDirectory,
-//                              _In_         LPSTARTUPINFO lpStartupInfo,
-//                              _Out_        LPPROCESS_INFORMATION lpProcessInformation
-//                              );
-    
-    PROCESS_INFORMATION process;
-    STARTUPINFO si;
-    memset(&process, 0, sizeof(process));
+    SHELLEXECUTEINFO si;
     memset(&si, 0, sizeof(si));
-    si.cb = sizeof(si);
+    si.cbSize = sizeof(si);
+    si.fMask= SEE_MASK_NO_CONSOLE;
+    si.lpVerb = "runas";
     
-    if (CreateProcess(
-        path,
-        cmdline,
-        &securityAttrs, // security
-        &securityAttrs, // threads
-        TRUE,           // inherit handles
-        CREATE_NO_WINDOW,              // Creation flags
-        NULL,           // environment
-        NULL,           // directory
-        &si,            // startup info
-        &process
-                        ) ) {
-        printf("startedx\n");
-        WaitForSingleObject( process.hProcess, INFINITE );
-        DWORD exitcode;
-    
-        GetExitCodeProcess(process.hProcess, &exitcode);
-        printf("exit %d\n", exitcode);
-        char c;
-        do {
-            c = getch();
-        }
-        while (c != '\n' && c != '\r');
-        
-        return exitcode;
-    } else {
-        return GetLastError();
+    HINSTANCE h = ShellExecute(NULL, "runas", s, cmdline, NULL, 0 );
+    if ( h > 32 ) {
+        printf("Hit the any key\n");
+        getch();
+        return 0;
     }
-    
-//    HINSTANCE h = ShellExecute(NULL, "runas", s, cmdline, NULL, SW_HIDE );
-//    if ( h > 32 )
-//        return 0;
-//
-//    printf("Error  %d\n", h);
-//    return h == 0? -1 : h;
+
+    printf("Error  %d, hit the any key\n", h);
+    getch();
+    return h == 0? -1 : h;
 }
