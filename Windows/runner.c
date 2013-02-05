@@ -7,6 +7,7 @@
 void printError( TCHAR* msg );
 
 int main(int argc, char * argv[]) {
+    char path[1000];
     int i ;
 
     char * cmdline = GetCommandLine();
@@ -25,8 +26,10 @@ int main(int argc, char * argv[]) {
     if ( *cmdline!=0)
         cmdline++;
 
-    char path[1000];
-    strncpy(path, argv[0], sizeof(path));
+    
+    
+    
+    GetModuleFileName(NULL, path, sizeof(path));
     strncat(path, ".jpm", sizeof(path));
 
     FILE *file = fopen ( path, "rb" );
@@ -43,6 +46,7 @@ int main(int argc, char * argv[]) {
     char *total = malloc( size );
     memset(total,0, size);
     fread(total,1,sz, file);
+    fclose(file);
     i = strlen(total);
     strcat(total, cmdline );
     char * p = total;
@@ -51,5 +55,6 @@ int main(int argc, char * argv[]) {
             *p = ' ';
         p++;
     }
+    
     return system(total);
 }

@@ -66,9 +66,10 @@ setup.exe : inno.iss runner.exe sjpm.exe readme.html ../dist/biz.aQute.jpm.run.j
 # kills the exe. So no elevation yet.
 #
 
-sjpm.exe : runner.exe aqute.pfx sjpm.exe.manifest 
-	cp runner.exe sjpm.exe
-#	mt.exe -manifest sjpm.exe.manifest "-outputresource:sjpm.exe;#1"
+sjpm.exe : sjpm.c aqute.pfx xmanifest
+	mingw32-gcc -o sjpm.exe sjpm.c
+	strip sjpm.exe
+	mt "-manifest" xmanifest "-outputresource:sjpm.exe;1"
 	signtool sign -f aqute.pfx -a -p $(PASSWORD) sjpm.exe
 
 #	
@@ -91,6 +92,7 @@ aqute.pfx : ../shared/aqute.ks
 #           
 runner.exe : runner.c
 	mingw32-gcc -o runner.exe runner.c
+	strip runner.exe
 
 #
 # And clean
