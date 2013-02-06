@@ -24,7 +24,7 @@
 # 
 # 	http://www.jrsoftware.org/isinfo.php
 # 
-# To sign the files (and maybe one day add a manifest), the Windows SDK for Windows 7
+# To sign the files , the Windows SDK for Windows 7
 # is required:
 # 
 # 	http://www.microsoft.com/en-us/download/details.aspx?id=3138
@@ -102,3 +102,5 @@ clean :
 
 getjpm:
 	curl https://bndtools.ci.cloudbees.com/job/bnd.next/lastSuccessfulBuild/artifact/dist/bundles/biz.aQute.jpm.run/biz.aQute.jpm.run-latest.jar >jpm.jar
+
+	
