@@ -76,8 +76,23 @@ begin
 end;
 
 function InitializeSetup(): Boolean;
+var
+  ErrorCode: Integer;
+  JavaInstalled : Boolean;
 begin
-  Result:= true;
+  JavaInstalled := RegKeyExists(HKLM,'SOFTWARE\JavaSoft\Java Runtime Environment');
+  if not JavaInstalled then
+  begin
+      if MsgBox('This tool requires Java Runtime Environment version 1.6 or newer to run. Please download and install the JRE and run this setup again. Do you want to download it now?',
+        mbConfirmation, MB_YESNO) = idYes then
+      begin
+        ShellExec('open','http://www.java.com','','',SW_SHOWNORMAL,ewNoWait,ErrorCode);
+      end;
+      Result := false;
+  end else
+  begin
+      Result:= true;
+  end;
 end;
 
 
