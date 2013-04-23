@@ -17,10 +17,10 @@ Source: "sjpm.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
 Source: "readme.html"; DestDir: "{app}"; Flags: isreadme
 
 [Run]
-Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -etk init"; Flags: shellexec 
+Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -ek init"; Flags: shellexec 
                                                                                                  
 [UnInstallRun]
-Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -etk deinit"; Flags: shellexec 
+Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -ek deinit"; Flags: shellexec 
                                                                                                  
 [Registry]
 Root: HKCU; Subkey: "Software\JPM4j"; Flags: uninsdeletekeyifempty

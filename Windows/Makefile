@@ -32,6 +32,7 @@
 # This makefile creates the (signed) Windows installer for jpm4j. Before running this
 # makefile ensure that the following tools are in the command path:
 # 
+#  export PATH="/c/wsdk7.1/Bin":"/c/inno5.5.3":"/c/Program Files/Java/jdk1.7.0_13/bin"
 #  msys.bat    "/c/MinGW/msys/1.0"
 #  signtool  	"/c/Program Files/Microsoft SDKs/Windows/v7.1/Bin"
 #  keytool   	"/c/Program Files/Java/jdk1.7.0_07/bin"
@@ -50,7 +51,7 @@ all: ../dist/jpm-setup.exe
 
 ../dist/jpm-setup.exe : setup.exe aqute.pfx
 	cp setup.exe $@
-	signtool sign -f aqute.pfx -d "Installer for jpm4j" -du "https://www.jpm4j.org/#/md/jpmcmd" -a -p $(PASSWORD) $@ 
+	signtool sign -f aqute.pfx -d "Installer for jpm4j" -du "https://www.jpm4j.org/#!/md/jpmcmd" -a -p $(PASSWORD) $@ 
 
 #
 # Build the installer
