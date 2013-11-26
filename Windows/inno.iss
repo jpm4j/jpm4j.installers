@@ -4,30 +4,24 @@
 
 
 [Setup]
-AppName=jpm4j
-AppVersion=1.1
-DefaultDirName={pf}\jpm4j
+AppName=JPM4J
+AppVersion=1.2
+DefaultDirName={sd}\JPM4J
 DefaultGroupName=jpm4j
 OutputDir=.
 
 [Files]
 Source: "..\dist\biz.aQute.jpm.run.jar"; DestDir: "{app}\misc";  Flags: ignoreversion
-Source: "runner.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
-Source: "sjpm.exe"; DestDir: "{app}\misc";  Flags: ignoreversion
-Source: "readme.html"; DestDir: "{app}"; Flags: isreadme
 
 [Run]
-Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -ek init"; Flags: shellexec 
+Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -ekh ""{app}"" init"; Flags: shellexec 
                                                                                                  
 [UnInstallRun]
-Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -ek deinit"; Flags: shellexec 
+Filename: {code:JavaPath}; Parameters: "-jar ""{app}\misc\biz.aQute.jpm.run.jar"" -ekh ""{app}"" deinit"; Flags: shellexec 
                                                                                                  
 [Registry]
-Root: HKCU; Subkey: "Software\JPM4j"; Flags: uninsdeletekeyifempty
-Root: HKLM32; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"
-Root: HKLM64; Subkey: "Software\JPM4j"; ValueType: string; ValueName: "Home"; ValueData: "{app}"; Check: IsWin64
-Root: HKLM32; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin'))
-Root: HKLM64; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\Bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin')) and IsWin64
+Root: HKLM32; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin'))
+Root: HKLM64; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: expandsz; ValueName: "Path"; ValueData: "{olddata};{app}\bin"; Check: NeedsAddPath(ExpandConstant('{app}\Bin')) and IsWin64
 
 [Setup]
 ; Tell Windows Explorer to reload the environment
