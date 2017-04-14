@@ -74,7 +74,13 @@ var
   ErrorCode: Integer;
   JavaInstalled : Boolean;
 begin
-  JavaInstalled := RegKeyExists(HKLM,'SOFTWARE\JavaSoft\Java Runtime Environment');
+  if IsWin64 then
+  begin
+  JavaInstalled := RegKeyExists(HKLM64,'SOFTWARE\JavaSoft\Java Runtime Environment');
+  end else
+  begin
+  JavaInstalled := RegKeyExists(HKLM32,'SOFTWARE\JavaSoft\Java Runtime Environment');
+  end
   if not JavaInstalled then
   begin
       if MsgBox('This tool requires Java Runtime Environment version 1.6 or newer to run. Please download and install the JRE and run this setup again. Do you want to download it now?',
